@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Marketplace</title>
+    <link rel="stylesheet" href="styles2.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Farm Marketplace</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <!-- Login/Logout Link -->
+                    <li id="auth-links">
+                        <a href="login.html" id="login-link">Login</a>
+                        <a href="logout.html" id="logout-link" style="display:none;">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="intro">
+            <h2>Your Orders</h2>
+            <p>View your order status and manage them here.</p>
+        </section>
+
+        <!-- Orders Section -->
+        <section class="orders">
+            <div id="order-list">
+                <p>Loading your orders...</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Farm Management System</p>
+    </footer>
+
+    <!-- JavaScript for Fetching Orders and Updating Order Status -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const orderList = document.getElementById('order-list');
+            const authLinks = document.getElementById('auth-links');
+            const loginLink = document.getElementById('login-link');
+            const logoutLink = document.getElementById('logout-link');
+
+            // Check if the user is authenticated (optional for marketplace access)
+            const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+
+            // Display login/logout based on authentication status
+            if (token) {
+                loginLink.style.display = 'none';
+                logoutLink.style.display = 'inline';
+            } else {
+                loginLink.style.display = 'inline';
+                logoutLink.style.display = 'none';
+            }
+
+            try {
+                // Fetch user's orders (only available for authenticated users)
+                const response = await fetch('http://localhost:3000/api/orders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`  // Pass token if available
+                    }
+                });
+                const data = await response.json();
+
+                // Clear loading message
+                orderList.innerHTML = '';
+
+                if (data.orders && data.orders.length > 0) {
+                    data.orders.forEach(order => {
+                        const orderCard = document.createElement('div');
+                        orderCard.classList.add('order-card');
+                        orderCard.innerHTML = `
+                            <h3>Order #${order._id}</h3>
+                            <p>Crop: ${order.crop}</p>
+                            <p>Price: ₹${order.price} per kg</p>
+                            <p>Status: <span class="order-status">${order.status}</span></p>
+                            <button class="update-status-button" data-id="${order._id}">Update Status</button>
+                        `;
+                        orderList.appendChild(orderCard);
+                    });
+
+                    // Add event listeners for updating order status
+                    document.querySelectorAll('.update-status-button').forEach(button => {
+                        button.addEventListener('click', async (e) => {
+                            const orderId = e.target.getAttribute('data-id');
+                            const orderStatusElement = e.target.previousElementSibling.querySelector('.order-status');
+
+                            const newStatus = prompt("Enter new status (pending, completed, cancelled):", orderStatusElement.innerText);
+
+                            if (newStatus && ['pending', 'completed', 'cancelled'].includes(newStatus)) {
+                                try {
+                                    const updateResponse = await fetch(`http://localhost:3000/api/orders/${orderId}`, {
+                                        method: 'PUT',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'Authorization': `Bearer ${token}`
+                                        },
+                                        body: JSON.stringify({ status: newStatus })
+                                    });
+
+                                    const updateResult = await updateResponse.json();
+                                    if (updateResponse.ok) {
+                                        alert('Order status updated successfully!');
+                                        orderStatusElement.innerText = newStatus;
+                                    } else {
+                                        alert(updateResult.message);
+                                    }
+                                } catch (error) {
+                                    alert('Error updating order status. Please try again later.');
+                                }
+                            } else {
+                                alert('Invalid status entered.');
+                            }
+                        });
+                    });
+                } else {
+                    orderList.innerHTML = '<p>No orders found.</p>';
+                }
+
+            } catch (error) {
+                orderList.innerHTML = '<p>Error loading orders. Please try again later.</p>';
+            }
+
+            // Fetch marketplace data (accessible to everyone)
+            const marketplaceResponse = await fetch('http://localhost:3000/api/marketplace');
+            const marketplaceData = await marketplaceResponse.json();
+            const marketplaceContainer = document.getElementById('marketplace-container');
+            marketplaceContainer.innerHTML = marketplaceData.items.map(item => `
+                <div class="marketplace-item">
+                    <h3>${item.crop}</h3>
+                    <p>Price: ₹${item.price}</p>
+                    <p>Location: ${item.location}</p>
+                </div>
+            `).join('');
+        });
+    </script>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

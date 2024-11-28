@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Crop Care</title>
+    <link rel="stylesheet" href="daily-care-styles.css">
+</head>
+<>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Daily Crop Care</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="form-section">
+            <h2>Enter Crop Information</h2>
+            <form id="crop-care-form">
+                <label for="crop-name">Crop Name:</label>
+                <input type="text" id="crop-name" name="cropName" placeholder="Enter your crop (e.g., Tomatoes)" required>
+
+                <label for="crop-stage">Crop Stage:</label>
+                <select id="crop-stage" name="cropStage" required>
+                    <option value="">Select Crop Stage</option>
+                    <option value="germination">Germination</option>
+                    <option value="vegetative">Vegetative</option>
+                    <option value="flowering">Flowering</option>
+                    <option value="harvest">Harvest</option>
+                </select>
+
+                <button type="submit">Get Daily Care</button>
+            </form>
+        </section>
+
+        <section class="daily-care-output">
+            <h2>Daily Care Tasks</h2>
+            <div id="daily-care-tasks">
+                <p>Submit the form to view daily care tasks for your crop.</p>
+            </div>
+        </section>
+
+        <section class="calendar-section">
+            <h2>Crop Care Calendar</h2>
+            <div id="calendar"></div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Farm Management System</p>
+    </footer>
+
+    <!-- JavaScript for API Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.2.0/dist/fullcalendar.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.2.0/dist/fullcalendar.min.css">
+    <script>
+        document.getElementById('crop-care-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const cropName = document.getElementById('crop-name').value;
+            const cropStage = document.getElementById('crop-stage').value;
+
+            const careTasksContainer = document.getElementById('daily-care-tasks');
+            careTasksContainer.innerHTML = '<p>Loading care tasks...</p>';
+
+            try {
+                // Fetch daily care tasks, fertilizers, and pesticides recommendations from APIs
+                const careResponse = await fetch(`http://localhost:3000/api/daily-care?cropName=${cropName}&cropStage=${cropStage}`);
+                const careData = await careResponse.json();
+
+                const fertilizerResponse = await fetch(`http://localhost:3000/api/fertilizers?cropName=${cropName}`);
+                const fertilizerData = await fertilizerResponse.json();
+
+                const pesticideResponse = await fetch(`http://localhost:3000/api/pesticides?cropName=${cropName}`);
+                const pesticideData = await pesticideResponse.json();
+
+                // Display care tasks and recommendations
+                careTasksContainer.innerHTML = `
+                    <h3>Daily Care Tasks:</h3>
+                    <ul>
+                        ${careData.tasks.map(task => `<li>${task}</li>`).join('')}
+                    </ul>
+                    <h3>Recommended Fertilizers:</h3>
+                    <ul>
+                        ${fertilizerData.recommendations.map(fertilizer => `<li>${fertilizer}</li>`).join('')}
+                    </ul>
+                    <h3>Recommended Pesticides:</h3>
+                    <ul>
+                        ${pesticideData.recommendations.map(pesticide => `<li>${pesticide}</li>`).join('')}
+                    </ul>
+                `;
+
+                // Initialize Calendar
+                $('#calendar').fullCalendar({
+                    events: careData.tasks.map(task => ({
+                        title: task,
+                        start: new Date(),
+                        allDay: true
+                    }))
+                });
+
+            } catch (error) {
+                careTasksContainer.innerHTML = '<p>Error fetching daily care tasks. Please try again later.</p>';
+            }
+        });
+    </script>
+<script src="scripts.js"></script>
+</body>
+</html>

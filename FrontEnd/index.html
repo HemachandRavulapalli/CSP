@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Farm Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Farm Management System</h1>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="form-section">
+            <h2>Login to Your Account</h2>
+            <form id="login-form">
+                <label for="login-phone">Phone Number:</label>
+                <input type="tel" id="login-phone" name="phone" placeholder="Enter your phone number" required>
+
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+
+                <div class="additional-options">
+                    <label>
+                        <input type="checkbox" id="remember-me"> Remember Me
+                    </label>
+                    <a href="forgot-password.html" id="forgot-password-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="register.html">Create an account</a></p>
+            </form>
+        </section>
+
+        <!-- Buttons for Features and Contact (Always Visible) -->
+        <section class="button-links">
+            <h2>Explore Our Services</h2>
+            <div class="button-container">
+                <a href="features.html" class="btn btn-primary">Features</a>
+                <a href="contact.html" class="btn btn-secondary">Contact</a>
+            </div>
+        </section>
+
+        <!-- Links to Protected Pages (Visible After Login) -->
+        <section class="protected-links" id="protected-links" style="display: none;">
+            <h2>Access Other Pages</h2>
+            <ul>
+                <li><a href="marketplace.html">Marketplace</a></li>
+                <li><a href="recommendations.html">Recommendations</a></li>
+                <li><a href="daily-care.html">Daily Care</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Farm Management System</p>
+    </footer>
+
+    <!-- JavaScript for Login Functionality -->
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ phone, password }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    if (rememberMe) {
+                        localStorage.setItem('authToken', result.token);  // Save token in localStorage for "Remember Me"
+                    } else {
+                        sessionStorage.setItem('authToken', result.token); // Store token in sessionStorage
+                    }
+
+                    // Display the links to other pages (Marketplace, Recommendations, Daily Care)
+                    document.getElementById('protected-links').style.display = 'block';
+
+                    // Hide login form after successful login
+                    document.getElementById('login-form').style.display = 'none';
+                } else {
+                    alert(result.message);  // Show error message if login fails
+                }
+            } catch (error) {
+                alert('Error logging in. Please try again later.');
+            }
+        });
+
+        // Check if user is authenticated, if not, show login form and only non-protected links
+        window.onload = function() {
+            if (localStorage.getItem('authToken') || sessionStorage.getItem('authToken')) {
+                // If token is found, the user is logged in, show the protected links
+                document.getElementById('protected-links').style.display = 'block';
+                document.getElementById('login-form').style.display = 'none';
+            }
+        }
+    </script>
+<script src="scripts.js"></script>
+</body>
+</html>

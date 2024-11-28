@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendations</title>
+    <link rel="stylesheet" href="recommendations-styles.css">
+</head>
+<>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Crop Recommendations</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="form-section">
+            <h2>Get Crop Recommendations</h2>
+            <form id="recommendations-form">
+                <!-- Automatically filled location -->
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="Enter your location" required readonly>
+
+                <!-- Soil type dropdown -->
+                <label for="soil-type">Soil Type:</label>
+                <select id="soil-type" name="soilType" required>
+                    <option value="">Select Soil Type</option>
+                    <option value="Loamy">Loamy</option>
+                    <option value="Clay">Clay</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Peaty">Peaty</option>
+                    <option value="Saline">Saline</option>
+                    <option value="Chalky">Chalky</option>
+                </select>
+
+                <!-- Season dropdown -->
+                <label for="season">Season:</label>
+                <select id="season" name="season" required>
+                    <option value="">Select Season</option>
+                    <option value="summer">Summer</option>
+                    <option value="winter">Winter</option>
+                    <option value="monsoon">Monsoon</option>
+                </select>
+
+                <button type="submit">Get Recommendations</button>
+            </form>
+        </section>
+
+        <section class="recommendations-output">
+            <h2>Recommended Crops</h2>
+            <div id="recommendations-list">
+                <p>Submit the form to view recommendations.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Farm Management System</p>
+    </footer>
+
+    <!-- JavaScript for API Integration -->
+    <script>
+        // Function to get the user's location automatically
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    // Fetch location name from coordinates (for simplicity, using a placeholder)
+                    document.getElementById('location').value = `Lat: ${latitude}, Lng: ${longitude}`;
+                }, function(error) {
+                    document.getElementById('location').value = 'Unable to fetch location';
+                });
+            } else {
+                document.getElementById('location').value = 'Geolocation not supported';
+            }
+        }
+
+        // Call the function to fetch user's location
+        window.onload = getUserLocation;
+
+        document.getElementById('recommendations-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const location = document.getElementById('location').value;
+            const soilType = document.getElementById('soil-type').value;
+            const season = document.getElementById('season').value;
+
+            const recommendationsList = document.getElementById('recommendations-list');
+            recommendationsList.innerHTML = '<p>Loading recommendations...</p>';
+
+            try {
+                // Fetch weather data
+                const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=YOUR_API_KEY`);
+                const weatherData = await weatherResponse.json();
+
+                // Fetch market dynamics and soil data
+                const soilResponse = await fetch(`https://soilgrids.org/api/v1/some_endpoint?soil=${soilType}`);
+                const soilData = await soilResponse.json();
+
+                const marketResponse = await fetch(`http://localhost:3000/api/market-dynamics?season=${season}`);
+                const marketData = await marketResponse.json();
+
+                // Generate recommendations based on all data
+                const recommendations = generateRecommendations(soilData, weatherData, marketData);
+
+                recommendationsList.innerHTML = recommendations.map(crop => `
+                    <div class="crop-card">
+                        <h3>${crop.name}</h3>
+                        <p>Suitability: ${crop.suitability}</p>
+                        <p>Expected Yield: ${crop.yield} tons</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                recommendationsList.innerHTML = '<p>Error fetching recommendations. Please try again later.</p>';
+            }
+        });
+
+        function generateRecommendations(soilData, weatherData, marketData) {
+            // Simulate logic for generating recommendations
+            return [
+                { name: 'Tomatoes', suitability: 'High', yield: 8 },
+                { name: 'Carrots', suitability: 'Medium', yield: 6 },
+                { name: 'Potatoes', suitability: 'High', yield: 10 }
+            ];
+        }
+    </script>
+<script src="scripts.js"></script>
+</body>
+</html>

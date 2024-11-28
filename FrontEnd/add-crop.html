@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Crop</title>
+    <link rel="stylesheet" href="add-crop-styles.css">
+</head>
+<>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <h1>Add Your Crop</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="marketplace.html">Marketplace</a></li>
+                    <li><a href="recommendations.html">Recommendations</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main>
+        <section class="form-section">
+            <h2>Enter Crop Details</h2>
+            <form id="add-crop-form" action="#" method="POST">
+                <label for="crop-name">Crop Name:</label>
+                <input type="text" id="crop-name" name="cropName" placeholder="e.g., Tomatoes" required>
+
+                <label for="crop-price">Price (per kg):</label>
+                <input type="number" id="crop-price" name="cropPrice" placeholder="e.g., 50" required>
+
+                <label for="crop-quantity">Quantity (in kg):</label>
+                <input type="number" id="crop-quantity" name="cropQuantity" placeholder="e.g., 100" required>
+
+                <label for="soil-type">Soil Type:</label>
+                <input type="text" id="soil-type" name="soilType" placeholder="e.g., Loamy" required>
+
+                <label for="seller-contact">Contact Number:</label>
+                <input type="tel" id="seller-contact" name="sellerContact" placeholder="e.g., 9876543210" required>
+
+                <button type="submit">Add Crop</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Farm Management System</p>
+    </footer>
+
+    <!-- JavaScript for API Integration -->
+    <script>
+        document.getElementById('add-crop-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const cropData = {
+                cropName: document.getElementById('crop-name').value,
+                cropPrice: parseFloat(document.getElementById('crop-price').value),
+                cropQuantity: parseInt(document.getElementById('crop-quantity').value, 10),
+                soilType: document.getElementById('soil-type').value,
+                sellerContact: document.getElementById('seller-contact').value,
+            };
+
+            try {
+                const response = await fetch('http://localhost:3000/api/crops', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(cropData),
+                });
+
+                if (response.ok) {
+                    alert('Crop added successfully!');
+                    document.getElementById('add-crop-form').reset();
+                } else {
+                    const error = await response.json();
+                    alert(`Error: ${error.message}`);
+                }
+            } catch (error) {
+                alert('Error adding crop. Please try again.');
+            }
+        });
+    </script>
+<script src="scripts.js"></script>
+</body>
+</html>
