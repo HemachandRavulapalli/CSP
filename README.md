@@ -40,12 +40,7 @@ The platform is built with a **Mobile-First** design philosophy, featuring large
 ## 🛠 Tech Stack
 
 <div align="center">
-	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" alt="React" title="React"/></code>
-	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183890598-19a0fe2d-b54f-4b06-b29f-da64a6b8566a.png" alt="Vite" title="Vite"/></code>
-	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183568594-85e280a7-0d7e-4d1a-9028-c8c2209e073c.png" alt="Node.js" title="Node.js"/></code>
-	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183859966-a3462d8d-1bc7-4880-b353-e2cbed900ed6.png" alt="Express" title="Express"/></code>
-	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7123.png" alt="SQLite" title="SQLite"/></code>
-	<code><img width="50" src="https://github.com/marwin1991/profile-technology-icons/assets/136815194/5f8c622c-c217-4649-b0a9-7e0ee24bd704" alt="Framer Motion" title="Framer Motion"/></code>
+  <img src="https://skillicons.dev/icons?i=react,vite,nodejs,express,sqlite,js,css,html,git" />
 </div>
 
 ## 📂 Project Structure
