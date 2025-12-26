@@ -1,0 +1,16 @@
+Server is running on port 3001
+Could not connect to MongoDB: MongooseError: The `uri` parameter to `openUri()` must be a string, got "undefined". Make sure the first parameter to `mongoose.connect()` or `mongoose.createConnection()` is a string.
+    at NativeConnection.createClient (/Users/girijaravulapalli/.gemini/antigravity/scratch/CSP/BackEnd/node_modules/mongoose/lib/drivers/node-mongodb-native/connection.js:225:11)
+    at NativeConnection.openUri (/Users/girijaravulapalli/.gemini/antigravity/scratch/CSP/BackEnd/node_modules/mongoose/lib/connection.js:835:34)
+    at Mongoose.connect (/Users/girijaravulapalli/.gemini/antigravity/scratch/CSP/BackEnd/node_modules/mongoose/lib/mongoose.js:447:15)
+    at Object.<anonymous> (/Users/girijaravulapalli/.gemini/antigravity/scratch/CSP/BackEnd/server.js:27:10)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1698:10)
+    at Module.load (node:internal/modules/cjs/loader:1303:32)
+    at Function._load (node:internal/modules/cjs/loader:1117:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+MongooseError: Operation `users.findOne()` buffering timed out after 10000ms
+    at Timeout.<anonymous> (/Users/girijaravulapalli/.gemini/antigravity/scratch/CSP/BackEnd/node_modules/mongoose/lib/drivers/node-mongodb-native/collection.js:185:23)
+    at listOnTimeout (node:internal/timers:614:17)
+    at process.processTimers (node:internal/timers:549:7)
