@@ -7,7 +7,8 @@
     <a href="#-features">Features</a> •
     <a href="#-tech-stack">Tech Stack</a> •
     <a href="#-getting-started">Getting Started</a> •
-    <a href="#-screenshots">Screenshots</a>
+    <a href="#-screenshots">Screenshots</a> •
+    <a href="https://smartagricsp.vercel.app/"><strong>Live Demo</strong></a>
   </p>
 </div>
 
@@ -17,6 +18,9 @@
 **SmartAgri** (formerly IFMMS) is a comprehensive digital solution designed to bridge the gap between farmers and technology. It empowers farmers with real-time crop advisory, a direct marketplace, and precision farming tools, while providing consumers with traceable, fresh produce.
 
 The platform is built with a **Mobile-First** design philosophy, featuring large touch-friendly controls, voice assistance, and regional language support capabilities.
+
+> [!TIP]
+> **Live Demo**: Access the platform online at **[smartagricsp.vercel.app](https://smartagricsp.vercel.app/)**
 
 ## ✨ Features
 
