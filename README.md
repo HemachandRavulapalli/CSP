@@ -39,14 +39,14 @@ The platform is built with a **Mobile-First** design philosophy, featuring large
 
 ## 🛠 Tech Stack
 
-| Component | Technology |
-|-----------|------------|
-| **Frontend** | React + Vite, Framer Motion, Axios |
-| **Styling** | Vanilla CSS (Glassmorphism), React Icons |
-| **Backend** | Node.js, Express.js |
-| **Database** | SQLite (Zero-config, relational) |
-| **Maps** | Leaflet.js, OpenStreetMap |
-| **Voice** | Web Speech API |
+<div align="center">
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" alt="React" title="React"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183890598-19a0fe2d-b54f-4b06-b29f-da64a6b8566a.png" alt="Vite" title="Vite"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183568594-85e280a7-0d7e-4d1a-9028-c8c2209e073c.png" alt="Node.js" title="Node.js"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183859966-a3462d8d-1bc7-4880-b353-e2cbed900ed6.png" alt="Express" title="Express"/></code>
+	<code><img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7123.png" alt="SQLite" title="SQLite"/></code>
+	<code><img width="50" src="https://github.com/marwin1991/profile-technology-icons/assets/136815194/5f8c622c-c217-4649-b0a9-7e0ee24bd704" alt="Framer Motion" title="Framer Motion"/></code>
+</div>
 
 ## 📂 Project Structure
 
@@ -97,13 +97,27 @@ npm run dev
 
 ## 📸 Screenshots
 
-| Dashboard | Vertical Calendar |
-|:---------:|:-----------------:|
-| *Interactive widgets & weather* | *Detailed crop growth stages* |
+<div align="center">
+  <h3>Interactive Dashboard</h3>
+  <img src="frontend/public/screenshots/dashboard.png" width="800" alt="Dashboard" />
+</div>
 
-| Marketplace | GPS Tracking |
-|:-----------:|:------------:|
-| *Buy/Sell produce* | *Live shipment tracking* |
+<br/>
+
+<div align="center">
+  <img src="frontend/public/screenshots/calendar.png" width="45%" alt="Calendar" />
+  <img src="frontend/public/screenshots/marketplace.png" width="45%" alt="Marketplace" />
+</div>
+<div align="center">
+  <p><em>Vertical Growth Timeline & Digital Marketplace</em></p>
+</div>
+
+<br/>
+
+<div align="center">
+  <h3>Real-time GPS Tracking</h3>
+  <img src="frontend/public/screenshots/gps.png" width="800" alt="GPS Tracking" />
+</div>
 
 ## 🤝 Contributing
 Contributions are welcome! Please fork the repository and create a pull request.
