@@ -5,28 +5,39 @@ import api from '../services/api';
 
 const Marketplace = () => {
     const [crops, setCrops] = useState([]);
+    const [availableCrops, setAvailableCrops] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newCrop, setNewCrop] = useState({
-        crop_name: '', price: '', quantity: '', description: ''
+        crop_id: '', price: '', quantity: '', description: ''
     });
 
     useEffect(() => {
         fetchCrops();
+        fetchAvailableCrops();
     }, []);
 
     const fetchCrops = async () => {
         try {
-            const response = await api.get('/marketplace');
+            const response = await api.get('/marketplace/browse');
             setCrops(response.data);
         } catch (error) {
             console.error('Error fetching marketplace items', error);
         }
     };
 
+    const fetchAvailableCrops = async () => {
+        try {
+            const response = await api.get('/crops');
+            setAvailableCrops(response.data);
+        } catch (error) {
+            console.error('Error fetching crops', error);
+        }
+    };
+
     const handleAddCrop = async (e) => {
         e.preventDefault();
         try {
-            await api.post('/marketplace/add', newCrop);
+            await api.post('/marketplace/list', newCrop);
             setShowModal(false);
             fetchCrops();
             alert('Crop listed successfully!');
@@ -83,6 +94,7 @@ const Marketplace = () => {
                             </div>
                             <div style={{ padding: '1.5rem' }}>
                                 <h3 style={{ margin: '0 0 0.5rem 0' }}>{crop.crop_name}</h3>
+                                <div style={{ fontSize: '0.8rem', color: '#555', marginBottom: '0.5rem' }}>By: {crop.farmer_name}</div>
                                 <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '1rem' }}>{crop.description}</p>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -122,7 +134,19 @@ const Marketplace = () => {
                     >
                         <h3>Sell Your Crop</h3>
                         <form onSubmit={handleAddCrop} style={{ marginTop: '1rem' }}>
-                            <input className="mb-2" placeholder="Crop Name (e.g. Tomato)" value={newCrop.crop_name} onChange={e => setNewCrop({ ...newCrop, crop_name: e.target.value })} required style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }} />
+                            <div style={{ marginBottom: '1rem' }}>
+                                <select
+                                    value={newCrop.crop_id}
+                                    onChange={e => setNewCrop({ ...newCrop, crop_id: e.target.value })}
+                                    required
+                                    style={{ width: '100%', padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc' }}
+                                >
+                                    <option value="">Select Crop</option>
+                                    {availableCrops.map(c => (
+                                        <option key={c.id} value={c.id}>{c.crop_name}</option>
+                                    ))}
+                                </select>
+                            </div>
                             <input className="mb-2" placeholder="Price per kg" type="number" value={newCrop.price} onChange={e => setNewCrop({ ...newCrop, price: e.target.value })} required style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }} />
                             <input className="mb-2" placeholder="Quantity (kg)" type="number" value={newCrop.quantity} onChange={e => setNewCrop({ ...newCrop, quantity: e.target.value })} required style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }} />
                             <textarea className="mb-2" placeholder="Description" value={newCrop.description} onChange={e => setNewCrop({ ...newCrop, description: e.target.value })} style={{ width: '100%', padding: '0.5rem', marginBottom: '1rem' }}></textarea>

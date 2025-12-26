@@ -39,9 +39,22 @@ The platform is built with a **Mobile-First** design philosophy, featuring large
 
 ## 🛠 Tech Stack
 
-<div align="center">
-  <img src="https://skillicons.dev/icons?i=react,vite,nodejs,express,sqlite,js,css,html,git" />
-</div>
+### **Frontend**
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-199900?style=for-the-badge&logo=leaflet&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+
+### **Backend**
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+
+### **Middleware & Services**
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![Axios](https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white)
+![Web Speech API](https://img.shields.io/badge/Web_Speech_API-FF6F00?style=for-the-badge&logo=google&logoColor=white)
 
 ## 📂 Project Structure
 
@@ -100,18 +113,18 @@ npm run dev
 <br/>
 
 <div align="center">
+  <img src="frontend/public/screenshots/my_crops.png" width="45%" alt="Smart Crop Selection" />
   <img src="frontend/public/screenshots/calendar.png" width="45%" alt="Calendar" />
-  <img src="frontend/public/screenshots/marketplace.png" width="45%" alt="Marketplace" />
 </div>
 <div align="center">
-  <p><em>Vertical Growth Timeline & Digital Marketplace</em></p>
+  <p><em>Smart Crop Recommendation & Vertical Growth Timeline</em></p>
 </div>
 
 <br/>
 
 <div align="center">
-  <h3>Real-time GPS Tracking</h3>
-  <img src="frontend/public/screenshots/gps.png" width="800" alt="GPS Tracking" />
+  <h3>Digital Marketplace</h3>
+  <img src="frontend/public/screenshots/marketplace.png" width="800" alt="Marketplace" />
 </div>
 
 ## 🤝 Contributing

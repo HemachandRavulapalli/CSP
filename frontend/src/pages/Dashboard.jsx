@@ -23,7 +23,7 @@ const Dashboard = () => {
         visible: { y: 0, opacity: 1 }
     };
 
-    const isFarmer = user.role === 'farmer';
+    const isFarmer = user.role?.toLowerCase() === 'farmer';
 
     return (
         <motion.div
@@ -107,22 +107,29 @@ const Dashboard = () => {
 };
 
 const ActionCard = ({ icon, title, link }) => (
-    <motion.a
-        href={link}
+    <motion.div
         variants={{ hidden: { scale: 0.8, opacity: 0 }, visible: { scale: 1, opacity: 1 } }}
+        initial="hidden"
+        animate="visible"
         whileHover={{ scale: 1.05, translateY: -5 }}
         whileTap={{ scale: 0.95 }}
         className="glass-card"
-        style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: '2rem', textDecoration: 'none', color: '#333', cursor: 'pointer'
-        }}
+        style={{ padding: '0', overflow: 'hidden' }}
     >
-        <div style={{ marginBottom: '1rem', background: '#f3f4f6', padding: '1rem', borderRadius: '50%' }}>
-            {icon}
-        </div>
-        <span style={{ fontWeight: 'bold' }}>{title}</span>
-    </motion.a>
+        <Link
+            to={link}
+            style={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                padding: '2rem', textDecoration: 'none', color: '#333', cursor: 'pointer',
+                width: '100%', height: '100%'
+            }}
+        >
+            <div style={{ marginBottom: '1rem', background: '#f3f4f6', padding: '1rem', borderRadius: '50%' }}>
+                {icon}
+            </div>
+            <span style={{ fontWeight: 'bold' }}>{title}</span>
+        </Link>
+    </motion.div>
 );
 
 export default Dashboard;

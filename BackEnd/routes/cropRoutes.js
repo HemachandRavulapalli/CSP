@@ -1,5 +1,16 @@
 const express = require('express');
+const db = require('../config/db');
 const router = express.Router();
+
+// Get all crops
+router.get('/', async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM crops');
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching crops' });
+    }
+});
 
 // Mock Rules Engine for Recommendations
 const getRecommendations = (soil, season) => {
