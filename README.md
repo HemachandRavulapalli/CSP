@@ -127,6 +127,13 @@ npm run dev
   <img src="frontend/public/screenshots/marketplace.png" width="800" alt="Marketplace" />
 </div>
 
+<br/>
+
+<div align="center">
+  <h3>Live GPS Tracking</h3>
+  <img src="frontend/public/screenshots/gps.png" width="800" alt="GPS Tracking" />
+</div>
+
 ## 🤝 Contributing
 Contributions are welcome! Please fork the repository and create a pull request.
 
